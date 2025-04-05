@@ -1,0 +1,19 @@
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin horizontal-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin rounded {
+  border-radius: 4px;
+}

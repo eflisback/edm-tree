@@ -1,0 +1,33 @@
+# Ignore artifacts
+dist
+node_modules
+coverage
+*.log
+*.cache
+
+# Ignore config files
+**/.next
+**/.out
+**/.vercel
+**/.cache
+
+# Ignore all HTML files (Vite handles these)
+*.html
+
+# Ignore common image formats
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.webp
+
+# Ignore lockfiles (they have their own formatting)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

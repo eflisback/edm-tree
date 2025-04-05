@@ -1,0 +1,73 @@
+.container {
+  @include vertical-flex;
+
+  justify-content: space-between;
+  padding: 3vh 6vw;
+  background: rgb(255, 53, 242);
+  background: radial-gradient(
+    circle,
+    rgba(121, 9, 114, 1) 15%,
+    rgba(210, 35, 110, 1) 45%,
+    rgba(0, 40, 48, 1) 100%
+  );
+  width: 100%;
+  height: 100%;
+  background-size: 200% 100%;
+
+  .header,
+  .footer {
+    @include horizontal-flex;
+
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+
+  .footer {
+    justify-content: center;
+  }
+
+  .side-bar {
+    @include vertical-flex;
+
+    gap: 5rem;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+
+    .header {
+      @include horizontal-flex;
+
+      align-items: center;
+      gap: 1rem;
+      font-size: 4rem;
+      color: $title-text;
+
+      svg {
+        position: relative;
+        bottom: 0.5rem;
+      }
+    }
+
+    .description {
+      color: $body-text;
+      font-size: 2rem;
+    }
+
+    .spotify-button {
+      @include horizontal-flex;
+      @include center-flex;
+      @include rounded;
+
+      width: fit-content;
+      border: 1px solid $green;
+      gap: 1rem;
+      padding: 2rem;
+      font-size: 2rem;
+    }
+  }
+}
+
+.colored {
+  color: $pink;
+}
