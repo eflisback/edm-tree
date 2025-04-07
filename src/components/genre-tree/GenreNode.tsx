@@ -1,6 +1,7 @@
 import { Text } from '@react-three/drei'
 import { Genre, Position2D } from './types'
 import { CatmullRomCurve3, Vector3 } from 'three'
+import { computeChildrenPositions } from './computeChildrenPositions'
 
 interface GenreNodeProps {
   genre: Genre
@@ -9,13 +10,12 @@ interface GenreNodeProps {
 }
 
 const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
-  const horizontalOffset = 150
-  const verticalSpacing = 4 ** (3 - depth)
-
-  const childrenPositions: Position2D[] = genre.subgenres.map((_, index) => ({
-    x: position.x + horizontalOffset,
-    y: position.y + (index - (genre.subgenres.length - 1) / 2) * verticalSpacing,
-  }))
+  const horizontalOffset = 200
+  const childrenPositions: Position2D[] = computeChildrenPositions(
+    genre,
+    position,
+    horizontalOffset,
+  )
 
   return (
     <>
@@ -45,14 +45,10 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
 
         return (
           <>
-            {/* Render a rounded tube instead of a line */}
             <mesh>
-              <tubeGeometry
-                args={[curve, 20, 0.5, 5, false]} // segments, radius, radialSegments, closed
-              />
+              <tubeGeometry args={[curve, 20, 0.5, 5, false]} />
               <meshBasicMaterial color='white' />
             </mesh>
-            {/* Recursive call for the child node */}
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />
           </>
         )

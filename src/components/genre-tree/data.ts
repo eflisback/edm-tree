@@ -57,7 +57,28 @@ export const edm: Genre = {
         {
           title: 'Dubstep',
           subgenres: [
-            { title: 'Brostep', subgenres: [] },
+            {
+              title: 'Brostep',
+              subgenres: [
+                {
+                  title: 'Test 1',
+                  subgenres: [
+                    {
+                      title: 'Wow 1',
+                      subgenres: [],
+                    },
+                    {
+                      title: 'Wow 2',
+                      subgenres: [],
+                    },
+                  ],
+                },
+                {
+                  title: 'Test 2',
+                  subgenres: [],
+                },
+              ],
+            },
             { title: 'Riddim', subgenres: [] },
           ],
         },
