@@ -2,6 +2,10 @@ import { Text } from '@react-three/drei'
 import { Genre, Position2D } from './types'
 import { CatmullRomCurve3, Vector3 } from 'three'
 import { computeChildrenPositions } from './computeChildrenPositions'
+import { Fragment } from 'react'
+import { cameraTargetStore } from '../../pages/home/scene/cameraTargetStore'
+import useAuthStore from '../../store/authStore'
+import { useSpotifyPlayerStore } from '../../store/spotifyPlayerStore'
 
 interface GenreNodeProps {
   genre: Genre
@@ -10,6 +14,9 @@ interface GenreNodeProps {
 }
 
 const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
+  const { accessToken } = useAuthStore()
+  const { playRandomFromPlaylist } = useSpotifyPlayerStore()
+
   const horizontalOffset = 200
   const childrenPositions: Position2D[] = computeChildrenPositions(
     genre,
@@ -17,9 +24,16 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
     horizontalOffset,
   )
 
+  const onPointerDown = async () => {
+    console.log(genre.title)
+    cameraTargetStore.value = { x: position.x, y: position.y }
+
+    await playRandomFromPlaylist(genre.playlistId, accessToken!)
+  }
+
   return (
     <>
-      <mesh position={[position.x, position.y, 0]}>
+      <mesh position={[position.x, position.y, 0]} onPointerDown={onPointerDown}>
         <circleGeometry args={[2, 32]} />
         <meshBasicMaterial color={'white'} />
       </mesh>
@@ -44,13 +58,13 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
         ])
 
         return (
-          <>
+          <Fragment key={index}>
             <mesh>
               <tubeGeometry args={[curve, 20, 0.5, 5, false]} />
               <meshBasicMaterial color='white' />
             </mesh>
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />
-          </>
+          </Fragment>
         )
       })}
     </>

@@ -1,5 +1,6 @@
 export interface Genre {
   title: string
+  playlistId: string
   subgenres: Genre[]
 }
 

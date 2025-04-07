@@ -1,7 +1,8 @@
-import { OrbitControls } from '@react-three/drei'
 import styles from './Home.module.scss'
 import { Canvas } from '@react-three/fiber'
 import GenreTree from '../../components/genre-tree/GenreTree'
+import CameraControls from './scene/CameraControls'
+import SpotifyPlayer from '../../components/spotify-player/SpotifyPlayer'
 
 const Overlay = () => {
   return (
@@ -15,9 +16,10 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <Overlay />
+      <SpotifyPlayer />
       <Canvas orthographic>
         <GenreTree />
-        <OrbitControls enableRotate={false} />
+        <CameraControls />
       </Canvas>
     </div>
   )

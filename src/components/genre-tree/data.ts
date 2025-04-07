@@ -2,112 +2,54 @@ import { Genre } from './types'
 
 export const edm: Genre = {
   title: 'Electronic Dance Music',
+  playlistId: '1lS6v9h4MXOw6f6y8MkS8w',
   subgenres: [
     {
       title: 'House',
+      playlistId: '2wYoj5Ugtyu5vVDDhTG4gk',
       subgenres: [
-        { title: 'Deep House', subgenres: [] },
-        { title: 'Progressive House', subgenres: [] },
-        { title: 'Tech House', subgenres: [] },
+        { title: 'Deep House', playlistId: '6vDGVr652ztNWKZuHvsFvx', subgenres: [] },
+        { title: 'Progressive House', playlistId: '5CMvAWTlDPdZnkleiTHyyo', subgenres: [] },
+        { title: 'Tech House', playlistId: '7nppx7uLgcmkZHg70HNfOk', subgenres: [] },
         {
           title: 'Bass House',
+          playlistId: '6ViSThD6IjBMKBnmtzDipB',
           subgenres: [],
-        },
-        {
-          title: 'Electro House',
-          subgenres: [
-            { title: 'Complextro', subgenres: [] },
-            { title: 'Big Room', subgenres: [] },
-          ],
         },
       ],
     },
     {
       title: 'Techno',
-      subgenres: [
-        { title: 'Detroit Techno', subgenres: [] },
-        { title: 'Minimal Techno', subgenres: [] },
-        { title: 'Acid Techno', subgenres: [] },
-      ],
+      playlistId: '18vUeZ9BdtMRNV6gI8RnR6',
+      subgenres: [],
     },
     {
       title: 'Trance',
-      subgenres: [
-        { title: 'Uplifting Trance', subgenres: [] },
-        { title: 'Progressive Trance', subgenres: [] },
-        { title: 'Psytrance', subgenres: [] },
-      ],
-    },
-    {
-      title: 'Garage',
-      subgenres: [
-        {
-          title: 'UK Garage',
-          subgenres: [
-            {
-              title: '2-Step Garage',
-              subgenres: [],
-            },
-            {
-              title: 'Speed Garage',
-              subgenres: [],
-            },
-          ],
-        },
-        {
-          title: 'Dubstep',
-          subgenres: [
-            {
-              title: 'Brostep',
-              subgenres: [
-                {
-                  title: 'Test 1',
-                  subgenres: [
-                    {
-                      title: 'Wow 1',
-                      subgenres: [],
-                    },
-                    {
-                      title: 'Wow 2',
-                      subgenres: [],
-                    },
-                  ],
-                },
-                {
-                  title: 'Test 2',
-                  subgenres: [],
-                },
-              ],
-            },
-            { title: 'Riddim', subgenres: [] },
-          ],
-        },
-        {
-          title: 'Future Bass',
-          subgenres: [],
-        },
-      ],
+      playlistId: '0Q3ugz23LAXFg2PvXJ8hMx',
+      subgenres: [],
     },
     {
       title: 'Drum and Bass',
+      playlistId: '068WHS0zOWsqvn2uIBYb5D',
       subgenres: [
-        { title: 'Liquid DnB', subgenres: [] },
-        { title: 'Neurofunk', subgenres: [] },
-        { title: 'Jump-Up', subgenres: [] },
+        { title: 'Liquid DnB', playlistId: '5ABMzUESx7K7EyowE5kFCl', subgenres: [] },
+        { title: 'Neurofunk', playlistId: '74qpkWDhdxOnzhlV1podBN', subgenres: [] },
       ],
     },
     {
       title: 'Hardstyle',
+      playlistId: '3bGSAHGYFEDxyEj7uXe0qq',
       subgenres: [
-        { title: 'Rawstyle', subgenres: [] },
-        { title: 'Euphoric Hardstyle', subgenres: [] },
+        { title: 'Rawstyle', playlistId: '3opjLW1qBOZHNWIw3yHuRq', subgenres: [] },
+        { title: 'Euphoric Hardstyle', playlistId: '1EmfWav1JYgAt0slcvJ352', subgenres: [] },
       ],
     },
     {
       title: 'Ambient / Downtempo',
+      playlistId: '5qmrJBZsGOgx7BW2HuJa7c',
       subgenres: [
-        { title: 'Chillstep', subgenres: [] },
-        { title: 'Lo-fi', subgenres: [] },
+        { title: 'Chillstep', playlistId: '5HOitcztsmc74UHgbKfwfn', subgenres: [] },
+        { title: 'Lo-fi', playlistId: '6zCID88oNjNv9zx6puDHKj', subgenres: [] },
       ],
     },
   ],
