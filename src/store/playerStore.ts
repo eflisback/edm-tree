@@ -4,6 +4,8 @@ import { Track } from '../components/spotify-player/types'
 interface PlayerStore {
   currentTrack: Track | null
   setCurrentTrack: (newValue: Track) => void
+  isCurrentTrackLiked: boolean
+  setIsCurrentTrackLiked: (newValue: boolean) => void
   timeMs: number
   setTimeMs: (newValue: number) => void
   isPaused: boolean
@@ -13,6 +15,8 @@ interface PlayerStore {
 export const usePlayerStore = create<PlayerStore>((set) => ({
   currentTrack: null,
   setCurrentTrack: (newValue) => set({ currentTrack: newValue }),
+  isCurrentTrackLiked: false,
+  setIsCurrentTrackLiked: (newValue) => set({ isCurrentTrackLiked: newValue }),
   timeMs: 0,
   setTimeMs: (newValue) => set({ timeMs: newValue }),
   isPaused: true,

@@ -16,7 +16,8 @@ let accessToken: string
 let devideId: string
 let initialized = false
 
-const { setCurrentTrack, setIsPaused, setTimeMs } = usePlayerStore.getState()
+const { setCurrentTrack, setIsPaused, setIsCurrentTrackLiked, setTimeMs } =
+  usePlayerStore.getState()
 
 export const initialize = (token: string) => {
   if (initialized) return
@@ -46,6 +47,10 @@ export const initialize = (token: string) => {
       pollPlaybackState()
     })
 
+    // player.addListener('player_state_changed', (state: any) => {
+    //   console.log(state)
+    // })
+
     player.connect()
   }
 }
@@ -63,6 +68,9 @@ export const playTrack = async (track: Track) => {
   })
   setCurrentTrack(track)
   setIsPaused(false)
+
+  const isLiked = await isTrackLiked(track)
+  setIsCurrentTrackLiked(isLiked)
 }
 
 export const seek = async (timeMs: number) => {
@@ -84,6 +92,18 @@ export const getCurrentState = async () => {
   return player.getCurrentState()
 }
 
+const isTrackLiked = async (track: Track) => {
+  const res = await fetch(`https://api.spotify.com/v1/me/tracks`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+
+  const data = await res.json()
+  const items = data.items as { track: Track }[]
+  return items.map((i) => i.track).some((t) => t.id === track.id)
+}
+
 export const getRandomTrackFromPlaylist = async (playlistId: string) => {
   const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
     headers: {
@@ -98,7 +118,43 @@ export const getRandomTrackFromPlaylist = async (playlistId: string) => {
   return randomTrack
 }
 
-let pollingInterval: NodeJS.Timeout | null = null // <-- new
+export const likeTrack = async (track: Track) => {
+  const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${track.id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(`Error liking track: ${errorData.error.message}`)
+  } else {
+    console.log('Track liked successfully!')
+    setIsCurrentTrackLiked(true)
+  }
+}
+
+export const unlikeTrack = async (track: Track) => {
+  const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${track.id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(`Error unliking track: ${errorData.error.message}`)
+  } else {
+    console.log('Track unliked successfully!')
+    setIsCurrentTrackLiked(false)
+  }
+}
+
+let pollingInterval: NodeJS.Timeout | null = null
 
 const pollPlaybackState = () => {
   if (pollingInterval !== null) return
@@ -107,6 +163,7 @@ const pollPlaybackState = () => {
     const state = await getCurrentState()
     if (state) {
       setTimeMs(state.position)
+      setIsPaused(state.paused)
     }
   }, 250)
 }

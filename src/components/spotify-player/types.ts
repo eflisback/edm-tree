@@ -29,4 +29,5 @@ export interface Track {
   artists: Artist[]
   duration_ms: number
   uri: string
+  id: string
 }

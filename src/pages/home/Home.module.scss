@@ -19,7 +19,7 @@
   .footer {
     pointer-events: initial;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 5rem;
     background-color: $body-background;
     border-radius: 1rem;
   }
@@ -30,6 +30,7 @@
 
     section {
       flex: 1;
+      max-width: calc(100% / 3);
     }
 
     .track-info {
@@ -40,15 +41,20 @@
       .track-image {
         width: 60px;
         height: 60px;
-        border-radius: 1rem;
       }
 
       .info-panel {
         @include vertical-flex;
 
+        overflow-x: hidden;
         justify-content: center;
+        padding-right: 5rem;
 
         .name {
+          width: 100%;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
           font-size: 2rem;
           color: $title-text;
         }
@@ -56,6 +62,11 @@
         .artists {
           font-size: 1.4rem;
           color: $body-text;
+
+          width: 100%;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
         }
       }
     }
@@ -93,6 +104,15 @@
           font-size: 2rem;
         }
       }
+    }
+
+    .misc-controls {
+      @include horizontal-flex;
+
+      align-items: center;
+      justify-content: end;
+
+      font-size: 2rem;
     }
   }
 }

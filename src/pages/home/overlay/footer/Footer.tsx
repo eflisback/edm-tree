@@ -1,12 +1,25 @@
 import styles from '../../Home.module.scss'
 import { usePlayerStore } from '../../../../store/playerStore'
-import { FaBackwardStep, FaForwardStep, FaPause, FaPlay } from 'react-icons/fa6'
+import {
+  FaBackwardStep,
+  FaForwardStep,
+  FaHeart,
+  FaPause,
+  FaPlay,
+  FaRegHeart,
+} from 'react-icons/fa6'
 import { Slider } from '@mui/material'
 import { formatDuration } from './formatDuration'
-import { pause, resume, seek } from '../../../../components/spotify-player/spotify'
+import {
+  likeTrack,
+  pause,
+  resume,
+  seek,
+  unlikeTrack,
+} from '../../../../components/spotify-player/spotify'
 
 const Footer = () => {
-  const { timeMs, currentTrack, isPaused } = usePlayerStore()
+  const { timeMs, currentTrack, isCurrentTrackLiked, isPaused } = usePlayerStore()
 
   return (
     <div className={styles.footer}>
@@ -82,7 +95,15 @@ const Footer = () => {
               })}
             />
           </section>
-          <section></section>
+          <section className={styles.miscControls}>
+            <button>
+              {isCurrentTrackLiked ? (
+                <FaHeart onClick={() => unlikeTrack(currentTrack)} />
+              ) : (
+                <FaRegHeart onClick={() => likeTrack(currentTrack)} />
+              )}
+            </button>
+          </section>
         </>
       )}
     </div>
