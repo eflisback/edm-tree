@@ -1,5 +1,5 @@
 import { usePlayerStore } from '../../store/playerStore'
-import { Track } from './types'
+import { Track, WebPlaybackState } from './types'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface SpotifyPlayer {
@@ -7,6 +7,7 @@ interface SpotifyPlayer {
   pause: () => Promise<void>
   resume: () => Promise<void>
   seek: (time: number) => Promise<void>
+  getCurrentState: () => Promise<WebPlaybackState | null>
   connect: () => Promise<void>
 }
 
@@ -15,14 +16,12 @@ let accessToken: string
 let devideId: string
 let initialized = false
 
-const { setCurrentTrack, setIsPaused } = usePlayerStore.getState()
+const { setCurrentTrack, setIsPaused, setTimeMs } = usePlayerStore.getState()
 
 export const initialize = (token: string) => {
   if (initialized) return
 
   initialized = true
-
-  console.log('Wow!')
 
   accessToken = token
   const script = document.createElement('script')
@@ -44,6 +43,7 @@ export const initialize = (token: string) => {
     player.addListener('ready', ({ device_id }: { device_id: string }) => {
       devideId = device_id
       console.log('Spotify Player ready with device id: ', device_id)
+      pollPlaybackState()
     })
 
     player.connect()
@@ -62,6 +62,12 @@ export const playTrack = async (track: Track) => {
     }),
   })
   setCurrentTrack(track)
+  setIsPaused(false)
+}
+
+export const seek = async (timeMs: number) => {
+  await player.seek(timeMs)
+  setTimeMs(timeMs)
 }
 
 export const pause = async () => {
@@ -72,6 +78,10 @@ export const pause = async () => {
 export const resume = async () => {
   await player.resume()
   setIsPaused(false)
+}
+
+export const getCurrentState = async () => {
+  return player.getCurrentState()
 }
 
 export const getRandomTrackFromPlaylist = async (playlistId: string) => {
@@ -86,4 +96,17 @@ export const getRandomTrackFromPlaylist = async (playlistId: string) => {
   const tracks = items.map((i) => i.track)
   const randomTrack = tracks[Math.floor(Math.random() * tracks.length)]
   return randomTrack
+}
+
+let pollingInterval: NodeJS.Timeout | null = null // <-- new
+
+const pollPlaybackState = () => {
+  if (pollingInterval !== null) return
+
+  pollingInterval = setInterval(async () => {
+    const state = await getCurrentState()
+    if (state) {
+      setTimeMs(state.position)
+    }
+  }, 250)
 }

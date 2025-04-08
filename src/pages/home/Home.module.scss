@@ -19,7 +19,7 @@
   .footer {
     pointer-events: initial;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: $body-background;
     border-radius: 1rem;
   }
@@ -27,26 +27,71 @@
   .footer {
     @include horizontal-flex;
     @include gradient-background;
-    gap: 2rem;
 
-    .track-image {
-      width: 60px;
-      height: 60px;
-      border-radius: 1rem;
+    section {
+      flex: 1;
     }
 
-    .info-panel {
-      @include vertical-flex;
-      justify-content: space-between;
+    .track-info {
+      @include horizontal-flex;
+      align-items: center;
+      gap: 2rem;
 
-      .name {
-        font-size: 2rem;
-        color: $title-text;
+      .track-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 1rem;
       }
 
-      .artists {
-        font-size: 1.4rem;
-        color: $body-text;
+      .info-panel {
+        @include vertical-flex;
+
+        justify-content: center;
+
+        .name {
+          font-size: 2rem;
+          color: $title-text;
+        }
+
+        .artists {
+          font-size: 1.4rem;
+          color: $body-text;
+        }
+      }
+    }
+
+    .track-controls {
+      @include vertical-flex;
+
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+
+      .top-row {
+        @include horizontal-flex;
+
+        width: 100%;
+        justify-content: space-between;
+        align-items: end;
+
+        .time-label {
+          width: 5rem;
+          color: $body-text;
+
+          &:first-of-type {
+            text-align: left;
+          }
+
+          &:last-of-type {
+            text-align: right;
+          }
+        }
+
+        .buttons {
+          @include horizontal-flex;
+          gap: 1rem;
+          font-size: 2rem;
+        }
       }
     }
   }

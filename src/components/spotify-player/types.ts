@@ -6,6 +6,11 @@ declare global {
   }
 }
 
+export interface WebPlaybackState {
+  paused: false
+  position: number
+}
+
 export interface Album {
   images: {
     width: number
