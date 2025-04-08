@@ -2,10 +2,10 @@ import { Text } from '@react-three/drei'
 import { Genre, Position2D } from './types'
 import { CatmullRomCurve3, Vector3 } from 'three'
 import { computeChildrenPositions } from './computeChildrenPositions'
-import { Fragment } from 'react'
-import { cameraTargetStore } from '../../pages/home/scene/cameraTargetStore'
+import { Fragment, useEffect } from 'react'
 import { useGenreTreeStore } from '../../store/genreTreeStore'
 import { branchContainsGenre } from './branchContainsGenre'
+import { useNodePositions } from './useNodePositions'
 
 interface GenreNodeProps {
   genre: Genre
@@ -15,6 +15,15 @@ interface GenreNodeProps {
 
 const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
   const { selectedGenre, setSelectedGenre } = useGenreTreeStore()
+  const nodePositions = useNodePositions()
+
+  useEffect(() => {
+    nodePositions.set(genre.id, position)
+
+    return () => {
+      nodePositions.delete(genre.id)
+    }
+  }, [genre.id, nodePositions, position])
 
   const horizontalOffset = 200
   const childrenPositions: Position2D[] = computeChildrenPositions(
@@ -24,7 +33,6 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
   )
 
   const onPointerDown = async () => {
-    cameraTargetStore.value = { x: position.x, y: position.y }
     setSelectedGenre(genre)
   }
 

@@ -1,8 +1,9 @@
 import { OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useRef } from 'react'
-import { cameraTargetStore } from './cameraTargetStore'
+import { useEffect, useRef } from 'react'
 import { Vector3 } from 'three'
+import { useGenreTreeStore } from '../../../store/genreTreeStore'
+import { useNodePositions } from '../../../components/genre-tree/useNodePositions'
 
 const LERP_SPEED = 0.15
 
@@ -11,8 +12,19 @@ const CameraControls = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const controlsRef = useRef<any>(null)
 
+  const { selectedGenre } = useGenreTreeStore()
+  const nodePositions = useNodePositions()
+
+  const reachedTarget = useRef(false)
+
+  useEffect(() => {
+    reachedTarget.current = false
+  }, [selectedGenre])
+
   useFrame(() => {
-    const target = cameraTargetStore.value
+    if (!selectedGenre || !nodePositions.has(selectedGenre.id) || reachedTarget.current) return
+
+    const target = nodePositions.get(selectedGenre.id)
     if (!target || !controlsRef.current) return
 
     const camPos = camera.position
@@ -27,7 +39,7 @@ const CameraControls = () => {
       camera.position.copy(targetVec)
       controlsRef.current.target.copy(targetVec)
       controlsRef.current.update()
-      cameraTargetStore.value = null
+      reachedTarget.current = true
     }
   })
 

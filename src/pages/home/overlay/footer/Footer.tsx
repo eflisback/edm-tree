@@ -2,8 +2,10 @@ import styles from '../../Home.module.scss'
 import { usePlayerStore } from '../../../../store/playerStore'
 import {
   FaBackwardStep,
+  FaDiceSix,
   FaForwardStep,
   FaHeart,
+  FaList,
   FaPause,
   FaPlay,
   FaRegHeart,
@@ -11,15 +13,19 @@ import {
 import { Slider } from '@mui/material'
 import { formatDuration } from './formatDuration'
 import {
+  getRandomTrackFromPlaylist,
   likeTrack,
   pause,
+  playTrack,
   resume,
   seek,
   unlikeTrack,
 } from '../../../../components/spotify-player/spotify'
+import { useGenreTreeStore } from '../../../../store/genreTreeStore'
 
 const Footer = () => {
   const { timeMs, currentTrack, isCurrentTrackLiked, isPaused } = usePlayerStore()
+  const { selectedGenre, randomizeGenre } = useGenreTreeStore()
 
   return (
     <div className={styles.footer}>
@@ -40,13 +46,18 @@ const Footer = () => {
             <div className={styles.topRow}>
               <span className={styles.timeLabel}>{formatDuration(timeMs / 1000)}</span>
               <div className={styles.buttons}>
-                <button>
+                <button onClick={() => seek(0)}>
                   <FaBackwardStep />
                 </button>
                 <button onClick={isPaused ? resume : pause}>
                   {isPaused ? <FaPlay /> : <FaPause />}
                 </button>
-                <button>
+                <button
+                  onClick={async () => {
+                    const newTrack = await getRandomTrackFromPlaylist(selectedGenre!.playlistId)
+                    playTrack(newTrack)
+                  }}
+                >
                   <FaForwardStep />
                 </button>
               </div>
@@ -96,7 +107,17 @@ const Footer = () => {
             />
           </section>
           <section className={styles.miscControls}>
-            <button>
+            <button onClick={randomizeGenre}>
+              <FaDiceSix />
+            </button>
+            <a
+              href={`https://open.spotify.com/playlist/${selectedGenre!.playlistId}`}
+              target='_blank'
+              title='View playlist'
+            >
+              <FaList />
+            </a>
+            <button title={isCurrentTrackLiked ? 'Unlike track' : 'Like track'}>
               {isCurrentTrackLiked ? (
                 <FaHeart onClick={() => unlikeTrack(currentTrack)} />
               ) : (

@@ -110,9 +110,15 @@
       @include horizontal-flex;
 
       align-items: center;
+      gap: 1rem;
       justify-content: end;
 
       font-size: 2rem;
+
+      a,
+      button {
+        @include center-flex;
+      }
     }
   }
 }
