@@ -5,3 +5,23 @@ declare global {
     Spotify: any
   }
 }
+
+export interface Album {
+  images: {
+    width: number
+    height: number
+    url: string
+  }[]
+}
+
+export interface Artist {
+  name: string
+}
+
+export interface Track {
+  name: string
+  album: Album
+  artists: Artist[]
+  duration_ms: number
+  uri: string
+}

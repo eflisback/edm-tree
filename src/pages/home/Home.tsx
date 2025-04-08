@@ -2,25 +2,27 @@ import styles from './Home.module.scss'
 import { Canvas } from '@react-three/fiber'
 import GenreTree from '../../components/genre-tree/GenreTree'
 import CameraControls from './scene/CameraControls'
-import SpotifyPlayer from '../../components/spotify-player/SpotifyPlayer'
-
-const Overlay = () => {
-  return (
-    <div className={styles.overlay}>
-      <span>yo</span>
-    </div>
-  )
-}
+import useAuthStore from '../../store/authStore'
+import { initialize } from '../../components/spotify-player/spotify'
+import { useEffect } from 'react'
+import Overlay from './overlay/Overlay'
 
 const Home = () => {
+  const { accessToken } = useAuthStore()
+
+  useEffect(() => {
+    if (accessToken) {
+      initialize(accessToken)
+    }
+  }, [accessToken])
+
   return (
     <div className={styles.container}>
-      <Overlay />
-      <SpotifyPlayer />
       <Canvas orthographic>
         <GenreTree />
         <CameraControls />
       </Canvas>
+      <Overlay />
     </div>
   )
 }

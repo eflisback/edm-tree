@@ -4,8 +4,7 @@ import { CatmullRomCurve3, Vector3 } from 'three'
 import { computeChildrenPositions } from './computeChildrenPositions'
 import { Fragment } from 'react'
 import { cameraTargetStore } from '../../pages/home/scene/cameraTargetStore'
-import useAuthStore from '../../store/authStore'
-import { useSpotifyPlayerStore } from '../../store/spotifyPlayerStore'
+import { getRandomTrackFromPlaylist, playTrack } from '../spotify-player/spotify'
 
 interface GenreNodeProps {
   genre: Genre
@@ -14,9 +13,6 @@ interface GenreNodeProps {
 }
 
 const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
-  const { accessToken } = useAuthStore()
-  const { playRandomFromPlaylist } = useSpotifyPlayerStore()
-
   const horizontalOffset = 200
   const childrenPositions: Position2D[] = computeChildrenPositions(
     genre,
@@ -27,8 +23,8 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
   const onPointerDown = async () => {
     console.log(genre.title)
     cameraTargetStore.value = { x: position.x, y: position.y }
-
-    await playRandomFromPlaylist(genre.playlistId, accessToken!)
+    const track = await getRandomTrackFromPlaylist(genre.playlistId)
+    await playTrack(track)
   }
 
   return (

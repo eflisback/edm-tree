@@ -1,15 +1,9 @@
 .container {
   @include vertical-flex;
+  @include gradient-background;
 
   justify-content: space-between;
   padding: 3vh 6vw;
-  background: rgb(255, 53, 242);
-  background: radial-gradient(
-    circle,
-    rgba(121, 9, 114, 1) 15%,
-    rgba(210, 35, 110, 1) 45%,
-    rgba(0, 40, 48, 1) 100%
-  );
   width: 100%;
   height: 100%;
   background-size: 200% 100%;

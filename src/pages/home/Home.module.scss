@@ -4,7 +4,50 @@
 }
 
 .overlay {
-  position: fixed;
+  @include vertical-flex;
 
-  z-index: 99;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2vh 1vw;
+  height: 100%;
+  justify-content: space-between;
+  pointer-events: none;
+
+  .header,
+  .footer {
+    pointer-events: initial;
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: $body-background;
+    border-radius: 1rem;
+  }
+
+  .footer {
+    @include horizontal-flex;
+    @include gradient-background;
+    gap: 2rem;
+
+    .track-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 1rem;
+    }
+
+    .info-panel {
+      @include vertical-flex;
+      justify-content: space-between;
+
+      .name {
+        font-size: 2rem;
+        color: $title-text;
+      }
+
+      .artists {
+        font-size: 1.4rem;
+        color: $body-text;
+      }
+    }
+  }
 }
