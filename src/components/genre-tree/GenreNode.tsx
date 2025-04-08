@@ -28,6 +28,8 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
     setSelectedGenre(genre)
   }
 
+  const isRoot = depth === 0
+
   return (
     <>
       <mesh position={[position.x, position.y, 1]} onPointerDown={onPointerDown}>
@@ -38,9 +40,13 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
       <Text
         fontSize={5}
         color='white'
-        anchorX='center'
-        anchorY='bottom'
-        position={[position.x, position.y + 3, 1]}
+        anchorX={isRoot ? 'right' : 'center'}
+        anchorY={isRoot ? 'middle' : 'bottom'}
+        position={[
+          isRoot ? position.x - 5 : position.x,
+          isRoot ? position.y + 1 : position.y + 4,
+          1,
+        ]}
       >
         {genre.title}
       </Text>
