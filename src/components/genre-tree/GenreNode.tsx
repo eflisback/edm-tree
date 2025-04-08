@@ -65,7 +65,7 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
         return (
           <Fragment key={index}>
             <mesh>
-              <tubeGeometry args={[curve, 20, 0.5, 5, false]} />
+              <tubeGeometry args={[curve, 50, 0.5, 5, false]} />
               <meshBasicMaterial color={highlighted ? 'hotpink' : 'white'} />
             </mesh>
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />

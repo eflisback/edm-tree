@@ -31,7 +31,15 @@ const CameraControls = () => {
     }
   })
 
-  return <OrbitControls ref={controlsRef} enableRotate={false} autoRotate={false} />
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      maxZoom={5}
+      minZoom={1}
+      enableRotate={false}
+      autoRotate={false}
+    />
+  )
 }
 
 export default CameraControls

@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <Canvas orthographic>
+      <Canvas orthographic camera={{ zoom: 3 }}>
         <GenreTree />
         <CameraControls />
       </Canvas>
