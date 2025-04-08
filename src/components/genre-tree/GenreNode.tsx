@@ -4,7 +4,8 @@ import { CatmullRomCurve3, Vector3 } from 'three'
 import { computeChildrenPositions } from './computeChildrenPositions'
 import { Fragment } from 'react'
 import { cameraTargetStore } from '../../pages/home/scene/cameraTargetStore'
-import { getRandomTrackFromPlaylist, playTrack } from '../spotify-player/spotify'
+import { useGenreTreeStore } from '../../store/genreTreeStore'
+import { branchContainsGenre } from './branchContainsGenre'
 
 interface GenreNodeProps {
   genre: Genre
@@ -13,6 +14,8 @@ interface GenreNodeProps {
 }
 
 const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
+  const { selectedGenre, setSelectedGenre } = useGenreTreeStore()
+
   const horizontalOffset = 200
   const childrenPositions: Position2D[] = computeChildrenPositions(
     genre,
@@ -21,17 +24,15 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
   )
 
   const onPointerDown = async () => {
-    console.log(genre.title)
     cameraTargetStore.value = { x: position.x, y: position.y }
-    const track = await getRandomTrackFromPlaylist(genre.playlistId)
-    await playTrack(track)
+    setSelectedGenre(genre)
   }
 
   return (
     <>
-      <mesh position={[position.x, position.y, 0]} onPointerDown={onPointerDown}>
+      <mesh position={[position.x, position.y, 1]} onPointerDown={onPointerDown}>
         <circleGeometry args={[2, 32]} />
-        <meshBasicMaterial color={'white'} />
+        <meshBasicMaterial color={genre === selectedGenre ? 'hotpink' : 'white'} />
       </mesh>
 
       <Text
@@ -39,7 +40,7 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
         color='white'
         anchorX='center'
         anchorY='bottom'
-        position={[position.x, position.y + 3, 0]}
+        position={[position.x, position.y + 3, 1]}
       >
         {genre.title}
       </Text>
@@ -53,11 +54,13 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
           new Vector3(childPosition.x, childPosition.y, 0),
         ])
 
+        const highlighted = selectedGenre && branchContainsGenre(subgenre, selectedGenre)
+
         return (
           <Fragment key={index}>
             <mesh>
               <tubeGeometry args={[curve, 20, 0.5, 5, false]} />
-              <meshBasicMaterial color='white' />
+              <meshBasicMaterial color={highlighted ? 'hotpink' : 'white'} />
             </mesh>
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />
           </Fragment>
