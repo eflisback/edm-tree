@@ -56,6 +56,14 @@
         text-wrap: nowrap;
         text-overflow: ellipsis;
         overflow-x: hidden;
+
+        a {
+          transition: color 0.15s ease;
+
+          &:hover {
+            color: $title-text;
+          }
+        }
       }
     }
   }
