@@ -18,9 +18,18 @@
     align-items: center;
     gap: 2rem;
 
-    .track-image {
+    .track-image,
+    .placeholder-image {
       width: 60px;
       height: 60px;
+    }
+
+    .placeholder-image {
+      @include center-flex;
+
+      background-color: #303030;
+      font-size: 2rem;
+      color: darkgray;
     }
 
     .info-panel {
