@@ -1,32 +1,39 @@
-.outer {
-  @include center-flex;
-  @include gradient-background;
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-  pointer-events: initial;
-  width: 100%;
-  padding: 3px;
+.header {
+  @include horizontal-flex;
+
+  padding: 1rem 5rem;
   border-radius: 1rem;
+  width: 100%;
+  pointer-events: none;
 
-  .inner {
+  .logo {
     @include horizontal-flex;
 
-    padding: 1rem 5rem;
-    border-radius: 1rem;
-    width: 100%;
-    background-color: $body-background;
+    align-items: center;
+    justify-content: left;
+    gap: 1rem;
+    font-size: 3rem;
+    text-shadow: 0 0 2rem rgba($color: black, $alpha: 0.25);
 
-    .logo {
-      @include horizontal-flex;
-
-      align-items: center;
-      justify-content: left;
-      gap: 1rem;
+    .credit {
       font-size: 2rem;
+      font-family: 'VT323', monospace;
+      font-weight: 400;
+      font-style: normal;
 
-      svg {
-        position: relative;
-        bottom: 0.3rem;
+      .gradient {
+        background: -webkit-linear-gradient(45deg, #31d169, #e2cd76, #f35959);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
+    }
+
+    svg {
+      position: relative;
+      bottom: 0.3rem;
     }
   }
 }

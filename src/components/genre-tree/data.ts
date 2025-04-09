@@ -6,71 +6,6 @@ export const edm: Genre = {
   playlistId: '1lS6v9h4MXOw6f6y8MkS8w',
   subgenres: [
     {
-      id: 'house',
-      title: 'House',
-      playlistId: '2wYoj5Ugtyu5vVDDhTG4gk',
-      subgenres: [
-        {
-          id: 'deep-house',
-          title: 'Deep House',
-          playlistId: '6vDGVr652ztNWKZuHvsFvx',
-          subgenres: [
-            {
-              id: 'future-house',
-              title: 'Future House',
-              playlistId: '7DyH8C8HXh5RzYKKEy2BQI',
-              subgenres: [],
-            },
-            {
-              id: 'slap-house',
-              title: 'Slap House',
-              playlistId: '3M2kdDYpU39aJ2RVivaHaH',
-              subgenres: [],
-            },
-          ],
-        },
-        {
-          id: 'progressive-house',
-          title: 'Progressive House',
-          playlistId: '5CMvAWTlDPdZnkleiTHyyo',
-          subgenres: [
-            {
-              id: 'dark-progressive-house',
-              title: 'Dark Progressive',
-              playlistId: '04lqMdLHfo7RUk9ZWocaXi',
-              subgenres: [],
-            },
-          ],
-        },
-        {
-          id: 'tech-house',
-          title: 'Tech House',
-          playlistId: '7nppx7uLgcmkZHg70HNfOk',
-          subgenres: [],
-        },
-        {
-          id: 'bass-house',
-          title: 'Bass House',
-          playlistId: '6ViSThD6IjBMKBnmtzDipB',
-          subgenres: [],
-        },
-
-        {
-          id: 'electro-house',
-          title: 'Electro House',
-          playlistId: '4QjYVKQOi6WzYlfCiqGEag',
-          subgenres: [
-            {
-              id: 'big-room',
-              title: 'Big Room',
-              playlistId: '3S03NWbWkrR1e7DPH9rf9Z',
-              subgenres: [],
-            },
-          ],
-        },
-      ],
-    },
-    {
       id: 'techno',
       title: 'Techno',
       playlistId: '18vUeZ9BdtMRNV6gI8RnR6',
@@ -153,6 +88,71 @@ export const edm: Genre = {
       ],
     },
     {
+      id: 'house',
+      title: 'House',
+      playlistId: '2wYoj5Ugtyu5vVDDhTG4gk',
+      subgenres: [
+        {
+          id: 'deep-house',
+          title: 'Deep House',
+          playlistId: '6vDGVr652ztNWKZuHvsFvx',
+          subgenres: [
+            {
+              id: 'future-house',
+              title: 'Future House',
+              playlistId: '7DyH8C8HXh5RzYKKEy2BQI',
+              subgenres: [],
+            },
+            {
+              id: 'slap-house',
+              title: 'Slap House',
+              playlistId: '3M2kdDYpU39aJ2RVivaHaH',
+              subgenres: [],
+            },
+          ],
+        },
+        {
+          id: 'progressive-house',
+          title: 'Progressive House',
+          playlistId: '5CMvAWTlDPdZnkleiTHyyo',
+          subgenres: [
+            {
+              id: 'dark-progressive-house',
+              title: 'Dark Progressive',
+              playlistId: '04lqMdLHfo7RUk9ZWocaXi',
+              subgenres: [],
+            },
+          ],
+        },
+        {
+          id: 'tech-house',
+          title: 'Tech House',
+          playlistId: '7nppx7uLgcmkZHg70HNfOk',
+          subgenres: [],
+        },
+        {
+          id: 'bass-house',
+          title: 'Bass House',
+          playlistId: '6ViSThD6IjBMKBnmtzDipB',
+          subgenres: [],
+        },
+
+        {
+          id: 'electro-house',
+          title: 'Electro House',
+          playlistId: '4QjYVKQOi6WzYlfCiqGEag',
+          subgenres: [
+            {
+              id: 'big-room',
+              title: 'Big Room',
+              playlistId: '3S03NWbWkrR1e7DPH9rf9Z',
+              subgenres: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: 'hardstyle',
       title: 'Hardstyle',
       playlistId: '3bGSAHGYFEDxyEj7uXe0qq',
@@ -164,10 +164,17 @@ export const edm: Genre = {
           subgenres: [],
         },
         {
-          id: 'euphoric-hardstyle',
-          title: 'Euphoric Hardstyle',
-          playlistId: '1EmfWav1JYgAt0slcvJ352',
-          subgenres: [],
+          id: 'melodic-hardstyle',
+          title: 'Melodic Hardstyle',
+          playlistId: '1cT396Iy4ms5JMJER5luyG',
+          subgenres: [
+            {
+              id: 'euphoric-hardstyle',
+              title: 'Euphoric Hardstyle',
+              playlistId: '1EmfWav1JYgAt0slcvJ352',
+              subgenres: [],
+            },
+          ],
         },
       ],
     },
@@ -184,8 +191,27 @@ export const edm: Genre = {
         },
         {
           id: 'lofi',
-          title: 'Lo-fi',
+          title: 'Lo-Fi',
           playlistId: '6zCID88oNjNv9zx6puDHKj',
+          subgenres: [],
+        },
+      ],
+    },
+    {
+      id: 'trap',
+      title: 'Trap',
+      playlistId: '5IbfwXajMFp5aNfmpHiTPa',
+      subgenres: [
+        {
+          id: 'hybrid-trap',
+          title: 'Hybrid Trap',
+          playlistId: '4lGst4bpbiUMXZnUBO15BM',
+          subgenres: [],
+        },
+        {
+          id: 'hard-trap',
+          title: 'Hard Trap',
+          playlistId: '5YSUepwuaupAeVrOY2byJy',
           subgenres: [],
         },
       ],
@@ -226,7 +252,27 @@ export const edm: Genre = {
       id: 'synthwave-retrowave',
       title: 'Synthwave',
       playlistId: '7gh5NAVKOqUZ8fPrM5NvXh',
-      subgenres: [],
+      subgenres: [
+        {
+          id: 'chillsynth',
+          title: 'Chillsynth',
+          playlistId: '5aQUboCc0wdyXvs4OeXpoX',
+          subgenres: [
+            {
+              id: 'vaporwave',
+              title: 'Vaporwave',
+              playlistId: '1hOzc9GLICCPVMq5xcCRxV',
+              subgenres: [],
+            },
+          ],
+        },
+        {
+          id: 'chillwave',
+          title: 'Chillwave',
+          playlistId: '50e5WGCBxw784lp3kzZ3Mc',
+          subgenres: [],
+        },
+      ],
     },
   ],
 }

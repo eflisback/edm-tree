@@ -1,6 +1,6 @@
 import styles from './Footer.module.scss'
 import { FaDiceSix, FaList, FaHeart, FaRegHeart } from 'react-icons/fa6'
-import { unlikeTrack, likeTrack } from '../../../../components/spotify-player/spotify'
+import { unlikeTrack, likeTrack, pause } from '../../../../components/spotify-player/spotify'
 import { useGenreTreeStore } from '../../../../store/genreTreeStore'
 import { usePlayerStore } from '../../../../store/playerStore'
 
@@ -10,7 +10,14 @@ const MiscControls = () => {
 
   return (
     <section className={styles.miscControls}>
-      <button onClick={randomizeGenre} title='Play random genre' disabled={isLoading}>
+      <button
+        onClick={() => {
+          pause()
+          randomizeGenre()
+        }}
+        title='Play random genre'
+        disabled={isLoading}
+      >
         <FaDiceSix />
       </button>
       {currentTrack && selectedGenre ? (

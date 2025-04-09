@@ -6,7 +6,12 @@ import { Fragment, useEffect, useMemo } from 'react'
 import { useGenreTreeStore } from '../../store/genreTreeStore'
 import { branchContainsGenre } from './branchContainsGenre'
 import { useNodePositions } from './useNodePositions'
-import { DEFAULT_NODE_COLOR, DEFAULT_TEXT_COLOR, HIGHLIGHT_COLOR } from './constants'
+import {
+  DEFAULT_NODE_COLOR,
+  DEFAULT_TEXT_COLOR,
+  HIGHLIGHT_NODE_COLOR,
+  HIGHLIGHT_TEXT_COLOR,
+} from './constants'
 
 interface GenreNodeProps {
   genre: Genre
@@ -26,7 +31,10 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
     }
   }, [genre.id, nodePositions, position])
 
-  const horizontalOffset = 200
+  const isRoot = depth === 0
+  const isSelected = selectedGenre === genre
+
+  const horizontalOffset = 225
   const childrenPositions: Position2D[] = computeChildrenPositions(
     genre,
     position,
@@ -37,17 +45,14 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
     setSelectedGenre(genre)
   }
 
-  const isRoot = depth === 0
-  const isSelected = selectedGenre === genre
-
-  const textColor = isSelected ? HIGHLIGHT_COLOR : DEFAULT_TEXT_COLOR
+  const textColor = isSelected ? HIGHLIGHT_TEXT_COLOR : DEFAULT_TEXT_COLOR
   const textMaterial = useMemo(() => new MeshBasicMaterial({ color: textColor }), [textColor])
 
   return (
     <>
       <mesh position={[position.x, position.y, 1]} onPointerDown={onPointerDown}>
         <circleGeometry args={[2, 32]} />
-        <meshBasicMaterial color={isSelected ? HIGHLIGHT_COLOR : DEFAULT_NODE_COLOR} />
+        <meshBasicMaterial color={isSelected ? HIGHLIGHT_NODE_COLOR : DEFAULT_NODE_COLOR} />
       </mesh>
 
       <Text
@@ -76,7 +81,9 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
           <Fragment key={index}>
             <mesh>
               <tubeGeometry args={[curve, 50, 0.5, 5, false]} />
-              <meshBasicMaterial color={highlighted ? HIGHLIGHT_COLOR : 'white'} />
+              <meshBasicMaterial
+                color={highlighted ? HIGHLIGHT_NODE_COLOR : isRoot ? 'gray' : DEFAULT_NODE_COLOR}
+              />
             </mesh>
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />
           </Fragment>

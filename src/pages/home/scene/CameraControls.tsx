@@ -46,7 +46,7 @@ const CameraControls = () => {
   return (
     <OrbitControls
       ref={controlsRef}
-      maxZoom={5}
+      maxZoom={3}
       minZoom={1}
       enableRotate={false}
       autoRotate={false}
