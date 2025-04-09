@@ -1,0 +1,32 @@
+.outer {
+  @include center-flex;
+  @include gradient-background;
+
+  pointer-events: initial;
+  width: 100%;
+  padding: 3px;
+  border-radius: 1rem;
+
+  .inner {
+    @include horizontal-flex;
+
+    padding: 1rem 5rem;
+    border-radius: 1rem;
+    width: 100%;
+    background-color: $body-background;
+
+    .logo {
+      @include horizontal-flex;
+
+      align-items: center;
+      justify-content: left;
+      gap: 1rem;
+      font-size: 2rem;
+
+      svg {
+        position: relative;
+        bottom: 0.3rem;
+      }
+    }
+  }
+}

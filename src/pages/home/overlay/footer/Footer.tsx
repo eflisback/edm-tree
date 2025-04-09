@@ -1,4 +1,4 @@
-import styles from '../../Home.module.scss'
+import styles from './Footer.module.scss'
 import { usePlayerStore } from '../../../../store/playerStore'
 import {
   FaBackwardStep,
@@ -46,7 +46,7 @@ const Footer = () => {
             <div className={styles.topRow}>
               <span className={styles.timeLabel}>{formatDuration(timeMs / 1000)}</span>
               <div className={styles.buttons}>
-                <button onClick={() => seek(0)}>
+                <button onClick={() => seek(0)} title='Restart'>
                   <FaBackwardStep />
                 </button>
                 <button onClick={isPaused ? resume : pause}>
@@ -57,6 +57,7 @@ const Footer = () => {
                     const newTrack = await getRandomTrackFromPlaylist(selectedGenre!.playlistId)
                     playTrack(newTrack)
                   }}
+                  title='Next song'
                 >
                   <FaForwardStep />
                 </button>
@@ -107,7 +108,7 @@ const Footer = () => {
             />
           </section>
           <section className={styles.miscControls}>
-            <button onClick={randomizeGenre}>
+            <button onClick={randomizeGenre} title='Play random genre'>
               <FaDiceSix />
             </button>
             <a
