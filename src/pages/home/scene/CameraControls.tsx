@@ -1,7 +1,7 @@
 import { OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
-import { Vector3 } from 'three'
+import { MOUSE, Vector3 } from 'three'
 import { useGenreTreeStore } from '../../../store/genreTreeStore'
 import { useNodePositions } from '../../../components/genre-tree/useNodePositions'
 
@@ -50,6 +50,11 @@ const CameraControls = () => {
       minZoom={1}
       enableRotate={false}
       autoRotate={false}
+      mouseButtons={{
+        LEFT: MOUSE.PAN,
+        MIDDLE: MOUSE.DOLLY
+      }
+      }
     />
   )
 }
