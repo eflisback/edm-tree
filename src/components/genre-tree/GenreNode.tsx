@@ -46,15 +46,12 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
       </mesh>
 
       <Text
+        font='/fonts/Mina-Regular.ttf'
         fontSize={5}
         color='white'
         anchorX={isRoot ? 'right' : 'center'}
         anchorY={isRoot ? 'middle' : 'bottom'}
-        position={[
-          isRoot ? position.x - 5 : position.x,
-          isRoot ? position.y + 1 : position.y + 4,
-          1,
-        ]}
+        position={[isRoot ? position.x - 5 : position.x, isRoot ? position.y : position.y + 3, 1]}
       >
         {genre.title}
       </Text>
