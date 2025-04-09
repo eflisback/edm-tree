@@ -5,7 +5,10 @@ import { MOUSE, Vector3 } from 'three'
 import { useGenreTreeStore } from '../../../store/genreTreeStore'
 import { useNodePositions } from '../../../components/genre-tree/useNodePositions'
 
+const MAX_ZOOM = 3
+const MIN_ZOOM = 1
 const LERP_SPEED = 0.15
+const ZOOM_LERP_SPEED = 0.1
 
 const CameraControls = () => {
   const { camera } = useThree()
@@ -15,14 +18,17 @@ const CameraControls = () => {
   const { selectedGenre } = useGenreTreeStore()
   const nodePositions = useNodePositions()
 
-  const reachedTarget = useRef(false)
+  const reachedTargetPosition = useRef(false)
+  const reachedTargetZoom = useRef(false)
 
   useEffect(() => {
-    reachedTarget.current = false
+    reachedTargetPosition.current = false
+    reachedTargetZoom.current = false
   }, [selectedGenre])
 
   useFrame(() => {
-    if (!selectedGenre || !nodePositions.has(selectedGenre.id) || reachedTarget.current) return
+    if (!selectedGenre || !nodePositions.has(selectedGenre.id) || reachedTargetPosition.current)
+      return
 
     const target = nodePositions.get(selectedGenre.id)
     if (!target || !controlsRef.current) return
@@ -39,15 +45,32 @@ const CameraControls = () => {
       camera.position.copy(targetVec)
       controlsRef.current.target.copy(targetVec)
       controlsRef.current.update()
-      reachedTarget.current = true
+      reachedTargetPosition.current = true
+    }
+  })
+
+  useFrame(() => {
+    if (!selectedGenre || reachedTargetZoom.current) return
+
+    const currentZoom = camera.zoom
+    const targetZoom = MAX_ZOOM
+    const newZoom = currentZoom + (targetZoom - currentZoom) * ZOOM_LERP_SPEED
+
+    camera.zoom = newZoom
+    camera.updateProjectionMatrix()
+
+    if (Math.abs(newZoom - targetZoom) < 0.01) {
+      camera.zoom = targetZoom
+      camera.updateProjectionMatrix()
+      reachedTargetZoom.current = true
     }
   })
 
   return (
     <OrbitControls
       ref={controlsRef}
-      maxZoom={3}
-      minZoom={1}
+      maxZoom={MAX_ZOOM}
+      minZoom={MIN_ZOOM}
       enableRotate={false}
       autoRotate={false}
       mouseButtons={{
