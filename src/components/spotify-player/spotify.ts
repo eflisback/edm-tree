@@ -1,3 +1,4 @@
+import { useGenreTreeStore } from '../../store/genreTreeStore'
 import { usePlayerStore } from '../../store/playerStore'
 import { Track, WebPlaybackState } from './types'
 
@@ -55,7 +56,11 @@ export const initialize = (token: string) => {
   }
 }
 
+let userPauseTriggered = false
+let previousPlaybackState: WebPlaybackState | null = null
+
 export const playTrack = async (track: Track) => {
+  userPauseTriggered = false
   setIsLoading(true)
   await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${devideId}`, {
     method: 'PUT',
@@ -81,11 +86,13 @@ export const seek = async (timeMs: number) => {
 }
 
 export const pause = async () => {
+  userPauseTriggered = true
   await player.pause()
   setIsPaused(true)
 }
 
 export const resume = async () => {
+  userPauseTriggered = false
   await player.resume()
   setIsPaused(false)
 }
@@ -118,6 +125,7 @@ export const getRandomTrackFromPlaylist = async (playlistId: string, setLoading:
 
   const data = await res.json()
   const items = data.items as { track: Track }[]
+  console.log(items)
   const tracks = items.map((i) => i.track)
   const randomTrack = tracks[Math.floor(Math.random() * tracks.length)]
   return randomTrack
@@ -159,6 +167,12 @@ export const unlikeTrack = async (track: Track) => {
   }
 }
 
+const onTrackEnd = async () => {
+  const { selectedGenre } = useGenreTreeStore.getState()
+  const newTrack = await getRandomTrackFromPlaylist(selectedGenre!.playlistId, true)
+  await playTrack(newTrack)
+}
+
 let pollingInterval: NodeJS.Timeout | null = null
 
 const pollPlaybackState = () => {
@@ -167,6 +181,14 @@ const pollPlaybackState = () => {
   pollingInterval = setInterval(async () => {
     const state = await getCurrentState()
     if (state) {
+      if (previousPlaybackState) {
+        if (!userPauseTriggered && !previousPlaybackState.paused && state.paused) {
+          onTrackEnd()
+        }
+      }
+
+      previousPlaybackState = state
+
       setTimeMs(state.position)
       setIsPaused(state.paused)
     }

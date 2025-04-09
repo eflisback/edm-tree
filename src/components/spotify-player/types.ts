@@ -21,6 +21,7 @@ export interface Album {
 
 export interface Artist {
   name: string
+  id: string
 }
 
 export interface Track {
