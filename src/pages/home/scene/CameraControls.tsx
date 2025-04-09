@@ -52,9 +52,9 @@ const CameraControls = () => {
       autoRotate={false}
       mouseButtons={{
         LEFT: MOUSE.PAN,
-        MIDDLE: MOUSE.DOLLY
-      }
-      }
+        MIDDLE: MOUSE.DOLLY,
+        RIGHT: MOUSE.PAN,
+      }}
     />
   )
 }
