@@ -10,7 +10,7 @@ import {
   FaPlay,
   FaRegHeart,
 } from 'react-icons/fa6'
-import { Slider } from '@mui/material'
+import { Skeleton, Slider } from '@mui/material'
 import { formatDuration } from './formatDuration'
 import {
   getRandomTrackFromPlaylist,
@@ -24,7 +24,7 @@ import {
 import { useGenreTreeStore } from '../../../../store/genreTreeStore'
 
 const Footer = () => {
-  const { timeMs, currentTrack, isCurrentTrackLiked, isPaused } = usePlayerStore()
+  const { isLoading, timeMs, currentTrack, isCurrentTrackLiked, isPaused } = usePlayerStore()
   const { selectedGenre, randomizeGenre } = useGenreTreeStore()
 
   return (
@@ -34,17 +34,36 @@ const Footer = () => {
       ) : (
         <>
           <section className={styles.trackInfo}>
-            <img className={styles.trackImage} src={currentTrack.album.images[2].url} />
-            <div className={styles.infoPanel}>
-              <span className={styles.name}>{currentTrack.name}</span>
-              <span className={styles.artists}>
-                {currentTrack.artists.map((a) => a.name).join(', ')}
-              </span>
-            </div>
+            {isLoading ? (
+              <>
+                <Skeleton animation='wave' variant='rectangular' width={60} height={60} />
+                <div className={styles.infoPanel}>
+                  <Skeleton animation='wave' variant='text' sx={{ fontSize: '2rem' }} width={150} />
+                  <Skeleton
+                    animation='wave'
+                    variant='text'
+                    sx={{ fontSize: '1.4rem' }}
+                    width={150}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <img className={styles.trackImage} src={currentTrack.album.images[2].url} />
+                <div className={styles.infoPanel}>
+                  <span className={styles.name}>{currentTrack.name}</span>
+                  <span className={styles.artists}>
+                    {currentTrack.artists.map((a) => a.name).join(', ')}
+                  </span>
+                </div>
+              </>
+            )}
           </section>
           <section className={styles.trackControls}>
             <div className={styles.topRow}>
-              <span className={styles.timeLabel}>{formatDuration(timeMs / 1000)}</span>
+              <span className={styles.timeLabel}>
+                {isLoading ? '--/--' : formatDuration(timeMs / 1000)}
+              </span>
               <div className={styles.buttons}>
                 <button onClick={() => seek(0)} title='Restart'>
                   <FaBackwardStep />
@@ -54,7 +73,10 @@ const Footer = () => {
                 </button>
                 <button
                   onClick={async () => {
-                    const newTrack = await getRandomTrackFromPlaylist(selectedGenre!.playlistId)
+                    const newTrack = await getRandomTrackFromPlaylist(
+                      selectedGenre!.playlistId,
+                      true,
+                    )
                     playTrack(newTrack)
                   }}
                   title='Next song'
@@ -63,7 +85,7 @@ const Footer = () => {
                 </button>
               </div>
               <span className={styles.timeLabel}>
-                {formatDuration(currentTrack.duration_ms / 1000)}
+                {isLoading ? '--/--' : formatDuration(currentTrack.duration_ms / 1000)}
               </span>
             </div>
             <Slider
@@ -72,7 +94,7 @@ const Footer = () => {
               min={0}
               max={currentTrack.duration_ms / 1000}
               step={1}
-              value={timeMs / 1000}
+              value={isLoading ? 0 : timeMs / 1000}
               onChange={(_, value) => {
                 seek(value * 1000)
               }}

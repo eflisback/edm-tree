@@ -11,7 +11,7 @@ const GenreTree = () => {
     if (!selectedGenre) return
 
     const playRandomTrack = async () => {
-      const track = await getRandomTrackFromPlaylist(selectedGenre.playlistId)
+      const track = await getRandomTrackFromPlaylist(selectedGenre.playlistId, true)
       await playTrack(track)
     }
 

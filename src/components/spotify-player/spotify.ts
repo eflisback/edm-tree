@@ -16,7 +16,7 @@ let accessToken: string
 let devideId: string
 let initialized = false
 
-const { setCurrentTrack, setIsPaused, setIsCurrentTrackLiked, setTimeMs } =
+const { setCurrentTrack, setIsPaused, setIsLoading, setIsCurrentTrackLiked, setTimeMs } =
   usePlayerStore.getState()
 
 export const initialize = (token: string) => {
@@ -56,6 +56,7 @@ export const initialize = (token: string) => {
 }
 
 export const playTrack = async (track: Track) => {
+  setIsLoading(true)
   await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${devideId}`, {
     method: 'PUT',
     headers: {
@@ -68,6 +69,7 @@ export const playTrack = async (track: Track) => {
   })
   setCurrentTrack(track)
   setIsPaused(false)
+  setIsLoading(false)
 
   const isLiked = await isTrackLiked(track)
   setIsCurrentTrackLiked(isLiked)
@@ -104,7 +106,10 @@ const isTrackLiked = async (track: Track) => {
   return items.map((i) => i.track).some((t) => t.id === track.id)
 }
 
-export const getRandomTrackFromPlaylist = async (playlistId: string) => {
+export const getRandomTrackFromPlaylist = async (playlistId: string, setLoading: boolean) => {
+  if (setLoading) {
+    setIsLoading(true)
+  }
   const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
