@@ -59,13 +59,13 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
       {genre.subgenres.map((subgenre, index) => {
         const childPosition = childrenPositions[index]
 
-        const curve = new CatmullRomCurve3([
-          new Vector3(position.x, position.y, 0),
-          new Vector3((position.x + childPosition.x) / 2, childPosition.y, 0),
-          new Vector3(childPosition.x, childPosition.y, 0),
-        ])
-
         const highlighted = selectedGenre && branchContainsGenre(subgenre, selectedGenre)
+
+        const curve = new CatmullRomCurve3([
+          new Vector3(position.x, position.y, highlighted ? 0.5 : 0),
+          new Vector3((position.x + childPosition.x) / 2, childPosition.y, highlighted ? 0.5 : 0),
+          new Vector3(childPosition.x, childPosition.y, highlighted ? 0.5 : 0),
+        ])
 
         return (
           <Fragment key={index}>
