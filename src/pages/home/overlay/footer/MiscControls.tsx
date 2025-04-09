@@ -5,12 +5,12 @@ import { useGenreTreeStore } from '../../../../store/genreTreeStore'
 import { usePlayerStore } from '../../../../store/playerStore'
 
 const MiscControls = () => {
-  const { currentTrack, isCurrentTrackLiked } = usePlayerStore()
+  const { currentTrack, isLoading, isCurrentTrackLiked } = usePlayerStore()
   const { selectedGenre, randomizeGenre } = useGenreTreeStore()
 
   return (
     <section className={styles.miscControls}>
-      <button onClick={randomizeGenre} title='Play random genre'>
+      <button onClick={randomizeGenre} title='Play random genre' disabled={isLoading}>
         <FaDiceSix />
       </button>
       {currentTrack && selectedGenre ? (

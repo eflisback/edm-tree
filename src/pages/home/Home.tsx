@@ -5,6 +5,7 @@ import CameraControls from './scene/CameraControls'
 import useAuthStore from '../../store/authStore'
 import { initialize } from '../../components/spotify-player/spotify'
 import { useEffect } from 'react'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import Overlay from './overlay/Overlay'
 
 const Home = () => {
@@ -20,6 +21,9 @@ const Home = () => {
     <div className={styles.container}>
       <Canvas orthographic camera={{ zoom: 3 }}>
         <GenreTree />
+        <EffectComposer>
+          <Bloom intensity={0.05} luminanceThreshold={0} luminanceSmoothing={0.5} />
+        </EffectComposer>
         <CameraControls />
       </Canvas>
       <Overlay />

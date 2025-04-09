@@ -1,6 +1,7 @@
-import { Skeleton } from '@mui/material'
 import styles from './Footer.module.scss'
+import { Skeleton } from '@mui/material'
 import { usePlayerStore } from '../../../../store/playerStore'
+import { Fragment } from 'react'
 
 const TrackInfo = () => {
   const { isLoading, currentTrack } = usePlayerStore()
@@ -30,12 +31,12 @@ const TrackInfo = () => {
             <span className={styles.artists}>
               {currentTrack
                 ? currentTrack.artists.map((a, i) => (
-                    <>
+                    <Fragment key={i}>
                       <a href={`https://open.spotify.com/artist/${a.id}`} target='_blank'>
                         {a.name}
                       </a>
                       {i === currentTrack.artists.length - 1 ? '' : ', '}
-                    </>
+                    </Fragment>
                   ))
                 : 'Select one in the tree!'}
             </span>

@@ -1,11 +1,12 @@
 import { Text } from '@react-three/drei'
 import { Genre, Position2D } from './types'
-import { CatmullRomCurve3, Vector3 } from 'three'
+import { CatmullRomCurve3, MeshBasicMaterial, Vector3 } from 'three'
 import { computeChildrenPositions } from './computeChildrenPositions'
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 import { useGenreTreeStore } from '../../store/genreTreeStore'
 import { branchContainsGenre } from './branchContainsGenre'
 import { useNodePositions } from './useNodePositions'
+import { DEFAULT_NODE_COLOR, DEFAULT_TEXT_COLOR, HIGHLIGHT_COLOR } from './constants'
 
 interface GenreNodeProps {
   genre: Genre
@@ -37,18 +38,22 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
   }
 
   const isRoot = depth === 0
+  const isSelected = selectedGenre === genre
+
+  const textColor = isSelected ? HIGHLIGHT_COLOR : DEFAULT_TEXT_COLOR
+  const textMaterial = useMemo(() => new MeshBasicMaterial({ color: textColor }), [textColor])
 
   return (
     <>
       <mesh position={[position.x, position.y, 1]} onPointerDown={onPointerDown}>
         <circleGeometry args={[2, 32]} />
-        <meshBasicMaterial color={genre === selectedGenre ? 'hotpink' : 'white'} />
+        <meshBasicMaterial color={isSelected ? HIGHLIGHT_COLOR : DEFAULT_NODE_COLOR} />
       </mesh>
 
       <Text
         font='/fonts/Mina-Regular.ttf'
         fontSize={5}
-        color='white'
+        material={textMaterial}
         anchorX={isRoot ? 'right' : 'center'}
         anchorY={isRoot ? 'middle' : 'bottom'}
         position={[isRoot ? position.x - 5 : position.x, isRoot ? position.y : position.y + 3, 1]}
@@ -71,7 +76,7 @@ const GenreNode = ({ genre, position, depth }: GenreNodeProps) => {
           <Fragment key={index}>
             <mesh>
               <tubeGeometry args={[curve, 50, 0.5, 5, false]} />
-              <meshBasicMaterial color={highlighted ? 'hotpink' : 'white'} />
+              <meshBasicMaterial color={highlighted ? HIGHLIGHT_COLOR : 'white'} />
             </mesh>
             <GenreNode genre={subgenre} position={childPosition} depth={depth + 1} />
           </Fragment>
