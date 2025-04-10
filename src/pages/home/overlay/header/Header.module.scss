@@ -7,6 +7,13 @@
   border-radius: 1rem;
   width: 100%;
   pointer-events: none;
+  text-shadow: 0 0 2rem rgba($color: black, $alpha: 0.25);
+  justify-content: space-between;
+  align-items: center;
+
+  // > section {
+  //   flex: 1;
+  // }
 
   .logo {
     @include horizontal-flex;
@@ -15,7 +22,6 @@
     justify-content: left;
     gap: 1rem;
     font-size: 3rem;
-    text-shadow: 0 0 2rem rgba($color: black, $alpha: 0.25);
 
     .credit {
       font-size: 2rem;
@@ -24,16 +30,58 @@
       font-style: normal;
 
       .gradient {
-        background: -webkit-linear-gradient(45deg, #31d169, #e2cd76, #f35959);
+        display: inline-block;
+        background: linear-gradient(45deg, #31d169, #e2cd76, #f35959);
         background-clip: text;
         -webkit-background-clip: text;
+        color: #31d169;
         -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
       }
     }
 
     svg {
       position: relative;
       bottom: 0.3rem;
+    }
+  }
+
+  // .now-exploring {
+  //   @include center-flex;
+
+  //   font-size: 2rem;
+
+  //   .panel {
+  //     @include horizontal-flex;
+
+  //     border-radius: 1rem;
+  //     align-items: center;
+  //     padding: 1rem 4rem;
+  //     gap: 1rem;
+
+  //     svg {
+  //       position: relative;
+  //       bottom: 0.3rem;
+  //     }
+  //   }
+  // }
+
+  .links {
+    @include horizontal-flex;
+
+    align-items: center;
+    justify-content: right;
+    gap: 2rem;
+    font-size: 2.4rem;
+    color: $body-text;
+
+    a {
+      pointer-events: all;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: $title-text;
+      }
     }
   }
 }
