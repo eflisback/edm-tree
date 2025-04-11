@@ -1,4 +1,4 @@
-import { FaCodeBranch, FaGithub } from 'react-icons/fa6'
+import { FaCodeBranch, FaGithub, FaSpotify } from 'react-icons/fa6'
 import styles from './Header.module.scss'
 import { ReactElement } from 'react'
 import Icon from '../../../../components/icon/Icon'
@@ -31,16 +31,10 @@ const Header = () => {
           </span>
         </span>
       </section>
-      {/* <section className={styles.nowExploring}>
-        {selectedGenre ? (
-          <div className={styles.panel}>
-            <FaCompactDisc />
-            <span>{selectedGenre.title}</span>
-          </div>
-        ) : (
-          ''
-        )}
-      </section> */}
+      <section className={styles.attribution}>
+        <FaSpotify />
+        <span>Powered by Spotify</span>
+      </section>
       <section className={styles.links}>
         {links.map((link, i) => (
           <a title={link.title} key={i} href={link.href} target='_blank' rel='noopener noreferrer'>
