@@ -1,7 +1,7 @@
 import { FaCodeBranch, FaGithub } from 'react-icons/fa6'
 import styles from './Header.module.scss'
-import { MdEqualizer } from 'react-icons/md'
 import { ReactElement } from 'react'
+import Icon from '../../../../components/icon/Icon'
 // import { useGenreTreeStore } from '../../../../store/genreTreeStore'
 // import { FaCompactDisc } from 'react-icons/fa6'
 
@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <section className={styles.logo}>
-        <MdEqualizer />
+        <Icon />
         <span>
           EDM Tree,
           <span className={styles.credit}>
