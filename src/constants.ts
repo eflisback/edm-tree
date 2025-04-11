@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'api.edmtree.app/api'
+export const BACKEND_URL = 'https://api.edmtree.app/api'
