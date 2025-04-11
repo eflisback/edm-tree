@@ -11,9 +11,9 @@
   justify-content: space-between;
   align-items: center;
 
-  // > section {
-  //   flex: 1;
-  // }
+  > section {
+    flex: 1;
+  }
 
   .logo {
     @include horizontal-flex;
