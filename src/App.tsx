@@ -29,6 +29,7 @@ const App = () => {
           }
         })
         .catch((err) => {
+          // TODO: Handle refreshing token
           console.log('Failed to refresh token', err)
           setIsAuthenticated(false)
         })

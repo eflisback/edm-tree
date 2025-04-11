@@ -125,7 +125,6 @@ export const getRandomTrackFromPlaylist = async (playlistId: string, setLoading:
 
   const data = await res.json()
   const items = data.items as { track: Track }[]
-  console.log(items)
   const tracks = items.map((i) => i.track)
   const randomTrack = tracks[Math.floor(Math.random() * tracks.length)]
   return randomTrack
@@ -144,7 +143,6 @@ export const likeTrack = async (track: Track) => {
     const errorData = await response.json()
     throw new Error(`Error liking track: ${errorData.error.message}`)
   } else {
-    console.log('Track liked successfully!')
     setIsCurrentTrackLiked(true)
   }
 }
@@ -162,7 +160,6 @@ export const unlikeTrack = async (track: Track) => {
     const errorData = await response.json()
     throw new Error(`Error unliking track: ${errorData.error.message}`)
   } else {
-    console.log('Track unliked successfully!')
     setIsCurrentTrackLiked(false)
   }
 }
