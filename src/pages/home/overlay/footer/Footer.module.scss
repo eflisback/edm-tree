@@ -18,6 +18,10 @@
     align-items: center;
     gap: 2rem;
 
+    > a {
+      @include center-flex;
+    }
+
     .track-image,
     .placeholder-image {
       width: 60px;
