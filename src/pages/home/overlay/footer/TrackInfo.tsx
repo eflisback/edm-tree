@@ -19,15 +19,24 @@ const TrackInfo = () => {
       ) : (
         <>
           {currentTrack ? (
-            <img className={styles.trackImage} src={currentTrack.album.images[2].url} />
+            <a href={`https://open.spotify.com/track/${currentTrack.id}`} target='_blank'>
+              <img className={styles.trackImage} src={currentTrack.album.images[2].url} />
+            </a>
           ) : (
             <div className={styles.placeholderImage}>?</div>
           )}
-
           <div className={styles.infoPanel}>
-            <span className={styles.name}>
-              {currentTrack ? currentTrack.name : 'Waiting for genre...'}
-            </span>
+            {currentTrack ? (
+              <a
+                className={styles.name}
+                href={`https://open.spotify.com/track/${currentTrack.id}`}
+                target='_blank'
+              >
+                {currentTrack.name}
+              </a>
+            ) : (
+              <span className={styles.name}>Waiting for genre...</span>
+            )}
             <span className={styles.artists}>
               {currentTrack
                 ? currentTrack.artists.map((a, i) => (
