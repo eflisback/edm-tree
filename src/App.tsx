@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import useAuthStore from './store/authStore'
-import { BACKEND_URL } from './constants'
+import { BACKEND_URL } from './config/environment'
 
 const App = () => {
   const { setAuth } = useAuthStore()

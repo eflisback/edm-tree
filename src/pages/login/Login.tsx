@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '../../constants'
+import { BACKEND_URL } from '../../config/environment'
 import styles from './Login.module.scss'
 import { FaGithub, FaHandSparkles, FaSpotify } from 'react-icons/fa6'
 
