@@ -11,12 +11,31 @@ import { usePlayerStore } from '../../../../store/playerStore'
 import styles from './Footer.module.scss'
 import { formatDuration } from './formatDuration'
 import { useGenreTreeStore } from '../../../../store/genreTreeStore'
+import { useKey } from 'react-use'
+
+const areControlsDisabledNow = () => {
+  const { isLoading, currentTrack } = usePlayerStore.getState()
+  return isLoading || !currentTrack
+}
+
+const isPausedNow = () => {
+  const { isPaused } = usePlayerStore.getState()
+  return isPaused
+}
 
 const TrackControls = () => {
   const { isLoading, isPaused, timeMs, currentTrack } = usePlayerStore()
   const { selectedGenre } = useGenreTreeStore()
 
-  const controlsDisabled = isLoading || !currentTrack
+  const togglePause = () => (isPausedNow() ? resume() : pause())
+
+  useKey(' ', () => {
+    if (!areControlsDisabledNow()) {
+      togglePause()
+    }
+  })
+
+  const controlsDisabled = areControlsDisabledNow()
 
   return (
     <section className={styles.trackControls}>
@@ -28,7 +47,7 @@ const TrackControls = () => {
           <button onClick={() => seek(0)} title='Restart' disabled={controlsDisabled}>
             <FaBackwardStep />
           </button>
-          <button onClick={isPaused ? resume : pause} disabled={controlsDisabled}>
+          <button onClick={togglePause} disabled={controlsDisabled}>
             {isPaused ? <FaPlay /> : <FaPause />}
           </button>
           <button
