@@ -1,6 +1,7 @@
 import { BACKEND_URL } from '../../config/environment'
 import styles from './Login.module.scss'
-import { FaGithub, FaHandSparkles, FaSpotify } from 'react-icons/fa6'
+import { FaGithub, FaHandSparkles, FaMobileScreen, FaSpotify } from 'react-icons/fa6'
+import { isMobile } from 'react-device-detect'
 
 const headerLinks = [{ icon: <FaGithub />, href: 'https://github.com/eflisback' }]
 
@@ -55,6 +56,21 @@ const PageFooter = () => {
 }
 
 const Login = () => {
+  if (isMobile)
+    return (
+      <div className={styles.mobileNotice}>
+        <div className={styles.panel}>
+          <span className={styles.title}>
+            <FaMobileScreen />
+            <span>Are you on mobile?</span>
+          </span>
+          <span className={styles.description}>
+            This website is exclusively designed for use on desktop or laptop devices.
+          </span>
+        </div>
+      </div>
+    )
+
   return (
     <div className={styles.container}>
       <PageHeader />

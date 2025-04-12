@@ -65,3 +65,38 @@
 .colored {
   color: $pink;
 }
+
+.mobile-notice {
+  @include center-flex;
+  @include gradient-background;
+
+  width: 100%;
+  height: 100%;
+
+  .panel {
+    @include vertical-flex;
+
+    gap: 1rem;
+    font-size: 1.4rem;
+    background-color: white;
+    border-radius: 4px;
+    padding: 2rem;
+
+    .title {
+      @include horizontal-flex;
+
+      gap: 0.5rem;
+      color: black;
+      font-weight: bold;
+
+      svg {
+        position: relative;
+        bottom: 0.2rem;
+      }
+    }
+
+    .description {
+      color: gray;
+    }
+  }
+}
